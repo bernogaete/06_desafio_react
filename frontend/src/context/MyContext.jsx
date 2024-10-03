@@ -6,6 +6,7 @@ const CartProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
+  const [token, setToken] = useState(['true'])
 
   // Función para agregar al carrito
   const addToCart = (pizza) => {
@@ -31,6 +32,7 @@ const CartProvider = ({ children }) => {
     );
   };
 
+
   
   useEffect(() => {
     const newTotalPrice = cart.reduce(
@@ -41,10 +43,21 @@ const CartProvider = ({ children }) => {
 
     setTotalPrice(newTotalPrice);
     setQuantity(newQuantity);
-  }, [cart]); // 
+  }, [cart]); 
+
+
+  //nueva funcion logout
+
+  const logout = () => {
+    setToken(false);
+  }
+
+
+
+  // Return del Provider
   return (
     <MyContext.Provider
-      value={{ cart, addToCart, decreaseQuantity, totalPrice, quantity }}
+      value={{ token, cart, addToCart, decreaseQuantity, totalPrice, quantity, logout }}
     >
       {children}
     </MyContext.Provider>

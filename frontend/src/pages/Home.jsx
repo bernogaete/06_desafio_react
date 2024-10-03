@@ -1,4 +1,5 @@
 import CardPizza from "../components/CardPizza";
+import CartProvider from "../context/MyContext";
 import pizzaData from "../script/pizzas"; // Renombrar la importación
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -61,3 +62,4 @@ const Home = ({ cart, setCart }) => {
 };
 
 export default Home;
+

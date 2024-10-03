@@ -1,14 +1,13 @@
-import { useContext } from "react";
+import { useContext } from "react"; 
 import { Button } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { MyContext } from "../context/MyContext";
 
+
 const Navbar = () => {
-  // Extraemos los valores del contexto
-  const { quantity, totalPrice } = useContext(MyContext);
+  const { quantity, totalPrice, token, logout, email } = useContext(MyContext); // Añadimos email
 
-
-  const token = true;
+  const setActiveClass = ({ isActive }) => (isActive ? 'active' : undefined);
 
   return (
     <div className="barra">
@@ -18,43 +17,41 @@ const Navbar = () => {
 
         <div className="d-inline-flex gap-2">
           {/* Links de navegación */}
-          <Link to="/">
-            <Button className="btn-nav">Home</Button>
-          </Link>
-          <Link to="/login">
-            <Button className="btn-nav">🔐 Login</Button>
-          </Link>
-          <Link to="/register">
-            <Button className="btn-nav">🔐 Register</Button>
-          </Link>
-          <Link to="/cart">
-            <Button className="btn-nav">🛒 Cart</Button>
-          </Link>
-          <Link to="/404">
-            <Button className="btn-nav">404 Not Found</Button>
-          </Link>
+          <ul>
+            <li className="navlink-button"><NavLink to="/" className={setActiveClass}>Home</NavLink></li>
+           
 
-          
-
-          {/* Botón de perfil condicional basado en el token */}
-          {token ? (
-            <Link to="/profile">
-              <Button className="btn-nav">👤 Perfil</Button>
-            </Link>
-          ) : null}
+            {token ? (
+              // Mostrar cuando el token es true
+              <>
+                <li className="navlink-button"><NavLink to="/profile" className={setActiveClass}>🔒 Profile</NavLink></li>
+                <li>
+                  <span className="welcome-message">Bienvenido, {email}!</span> {/* Mostrar el mensaje de bienvenida */}
+                  <Button variant="outline-warning" onClick={logout} className="text-white me-2">
+                    🔒 Logout
+                  </Button>
+                </li>
+              </>
+            ) : (
+              // Mostrar cuando el token es false
+              <>
+                <li className="navlink-button"><NavLink to="/register" className={setActiveClass}>🔐 Register</NavLink></li>
+                <li className="navlink-button"><NavLink to="/login" className={setActiveClass}>👤 Login</NavLink></li>
+              </>
+            )}
+          </ul>
         </div>
 
         {/* Información del carrito */}
         <div className="d-flex gap-2 ms-auto">
-          <Link
+          <NavLink
             to="/cart"
             className="btn btn-outline-primary d-flex align-items-center"
             style={{ fontSize: "small", backgroundColor: "#f8f9fa" }}
           >
             {/* Mostramos el total del carrito y la cantidad */}
-            🛒 Total: ${totalPrice.toLocaleString()} &nbsp;|&nbsp; Pagar
-            CARRITO: {quantity}
-          </Link>
+            🛒 Total: ${totalPrice.toLocaleString()} &nbsp;|&nbsp; CARRITO: {quantity}
+          </NavLink>
         </div>
       </div>
     </div>

@@ -5,11 +5,15 @@ import './index.css'
 import { BrowserRouter } from 'react-router-dom'
 import CartProvider from './context/MyContext.jsx'
 
+
 ReactDOM.createRoot(document.getElementById('root')).render(
+  <BrowserRouter>
   <CartProvider>
-        <BrowserRouter>
-    <App />
-    </BrowserRouter>
+      
+        <App />
     </CartProvider>
+    
+    
+    </BrowserRouter>
 
 );
